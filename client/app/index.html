@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>"Client"</title>
+
+    <!-- build:css styles/vendor.css -->
+    <!-- <link rel="stylesheet" href="vendor/some.contrib.css"> -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+
+  <body ng-app="Client" ng-controller="MapCtrl">
+    <ion-header-bar class="bar-stable">
+      <h1 class="title">Map</h1>
+    </ion-header-bar>
+
+    <ion-content scroll="false">
+      <map on-create="mapCreated(map)"></map>
+    </ion-content>
+
+    <ion-footer-bar class="bar-stable">
+      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+    </ion-footer-bar>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- This Google Maps API file was downloaded from: -->
+    <!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true -->
+    <!-- Saving it in the vendor/ directory allows it to be bundled as part of the build system. -->
+    <!-- You should replace it with a version downloaded using your API key -->
+    <script src="vendor/google/maps.js"></script>
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/config.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers.js"></script>
+        <script src="scripts/directives.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
