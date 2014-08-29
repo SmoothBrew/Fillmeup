@@ -38,9 +38,17 @@
 From within the root directory:
 
 ```sh
+First Install Node js
+Ionic and Cordova command line tools required
+	npm install -g cordova ionic
 sudo npm install -g bower
+The client and server modules are separated into two subfolders of the root.
+Each subfolder has their own package.json files and the client has it's own bower.json file.
+change directory to client
 npm install
 bower install
+change directory to server
+npm install 
 ```
 
 ### Roadmap
