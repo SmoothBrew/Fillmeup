@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>"Client"</title>
+    <title>Java Hunt</title>
 
     <!-- build:css styles/vendor.css -->
     <!-- <link rel="stylesheet" href="vendor/some.contrib.css"> -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -27,7 +28,7 @@
     </ion-content>
 
     <ion-footer-bar class="bar-stable">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+      <a ng-click="recenter()" class="button button-icon icon ion-navigate"></a>
     </ion-footer-bar>
 
     <!-- build:js scripts/vendor.js -->
@@ -37,6 +38,13 @@
     <!-- You should replace it with a version downloaded using your API key -->
     <script src="vendor/google/maps.js"></script>
     <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/collide/collide.js"></script>
+    <script src="bower_components/ionic/release/js/ionic.js"></script>
+    <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
