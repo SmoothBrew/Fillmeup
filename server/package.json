@@ -1,15 +1,16 @@
 {
   "name": "fillMeUp",
   "main": "server.js",
-  "dependencies" : {
-    "express" : "~4.0.0",                      
-    "mongoose" : "~3.8.1",          
-    "passport" : "~0.1.17",          
-    "passport-facebook" : "~1.0.2", 
-    "morgan": "~1.0.0",
+  "dependencies": {
     "body-parser": "~1.0.0",
     "cookie-parser": "~1.0.0",
+    "express": "~4.0.0",
+    "express-session": "~1.0.0",
     "method-override": "~1.0.0",
-    "express-session": "~1.0.0"
+    "mongoose": "~3.8.1",
+    "morgan": "~1.0.0",
+    "oauth": "^0.9.12",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2"
   }
 }
