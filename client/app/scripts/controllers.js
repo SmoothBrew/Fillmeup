@@ -5,9 +5,10 @@ angular.module('Client.controllers', [])
 .controller('MapCtrl', function($scope, $ionicLoading) {
   $scope.mapCreated = function(map) {
     $scope.map = map;
+    $scope.centerOnMe(true, 'splash');
   };
 
-  $scope.centerOnMe = function () {
+  $scope.centerOnMe = function (showOrHideBackdrop, templateName) {
     console.log('Centering');
     if (!$scope.map) {
       return;
@@ -15,7 +16,8 @@ angular.module('Client.controllers', [])
 
     $ionicLoading.show({
       content: 'Getting current location...',
-      showBackdrop: false
+      showBackdrop: showOrHideBackdrop,
+      templateUrl: '/templates/' + templateName + '.html'
     });
 
     navigator.geolocation.getCurrentPosition(function (pos) {
