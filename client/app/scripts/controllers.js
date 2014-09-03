@@ -5,28 +5,20 @@ angular.module('Client.controllers', [])
 .controller('MapCtrl', function($scope, $ionicLoading) {
   $scope.mapCreated = function(map) {
     $scope.map = map;
-    $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: true,
-      templateUrl: '/templates/splash.html'
-    });
-    $scope.centerOnMe();
+    $scope.centerOnMe(true, 'splash');
   };
 
-  $scope.recenter = function() {
-    $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false,
-      templateUrl: '/templates/loading.html'
-    });
-    $scope.centerOnMe();
-  }
-
-  $scope.centerOnMe = function () {
+  $scope.centerOnMe = function (showOrHideBackdrop, templateName) {
     console.log('Centering');
     if (!$scope.map) {
       return;
     }
+
+    $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: showOrHideBackdrop,
+      templateUrl: '/templates/' + templateName + '.html'
+    });
 
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got pos', pos);
