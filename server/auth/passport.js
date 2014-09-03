@@ -4,6 +4,7 @@ var authConfig = require('./authConfig');
 
 module.exports = function(passport){
 
+    console.log("configuring passport...");
     //serialize user
     passport.serializeUser(function(user, done){
         done(null, user.id);
@@ -20,7 +21,7 @@ module.exports = function(passport){
     // Facebook Authentication
     //========================================
     passport.use(new FacebookStrategy({
-        clientId: authConfig.facebookAuth.clientID,
+        clientID: authConfig.facebookAuth.clientID,
         clientSecret: authConfig.facebookAuth.clientSecret,
         callbackURL: authConfig.facebookAuth.callbackURL,
         passReqToCallback: true

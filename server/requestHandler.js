@@ -1,5 +1,5 @@
 module.exports = function(app, passport){
-
+    console.log('configuring requestHandler...');
     //======================================================================
     // Facebook Authentication
     // =====================================================================
