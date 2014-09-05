@@ -2,7 +2,7 @@
 
 angular.module('Client.controllers', [])
 
-.controller('MapCtrl', function($scope, $ionicLoading) {
+.controller('MapCtrl', function($scope, $ionicLoading, $http) {
   // create a google maps geocoder
   var geocoder = new google.maps.Geocoder();
 
@@ -38,11 +38,18 @@ angular.module('Client.controllers', [])
           console.log('geocoding ok');
           if(results[1]) {
             console.log('reverse geocode results are: ', results);
+            // $http.post('http://127.0.0.1:8000/cafe', results[1][0])
+            //   .success(function(data, status, headers, config) {
+            //     console.log('success post request');
+            //   })
+            //   .error(function(data, status, headers, config) {
+            //     console.log('error post request');
+            //   });
           }
         }
       });
-
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      //set map to the new google map centered on user's position
+      $scope.map.setCenter(latlng);
 
       $ionicLoading.hide();
     }, function (error) {
