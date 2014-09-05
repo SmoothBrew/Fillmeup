@@ -28,4 +28,9 @@ angular.module('Client.controllers', [])
       alert('Unable to get location: ' + error.message);
     });
   };
+
+  $scope.logIn = function(){
+    console.log('Logging in...');
+  };
+
 });
