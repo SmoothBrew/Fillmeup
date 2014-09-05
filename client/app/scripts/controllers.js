@@ -8,20 +8,17 @@ angular.module('Client.controllers', [])
     $scope.centerOnMe(true, 'splash');
   };
 
-
   // creates proper icon for google maps marker
   var image = {
     url: '../images/coffee.png',
     size: new google.maps.Size(20, 20),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(10, 10)
-  }
+  };
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
     businesses.forEach(function(business){
-      console.log('placing marker for ', business);
-      console.log('image ', image);
       var markerPosition = new google.maps.LatLng(business.location.coordinate.latitude, business.location.coordinate.longitude);
       var marker = new google.maps.Marker({
         position: markerPosition,
