@@ -22,7 +22,14 @@ angular.module('Client.controllers', [])
 
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got pos', pos);
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      var MyPosition = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      $scope.map.setCenter(MyPosition);
+      $scope.markers = (new google.maps.Marker({
+        position: MyPosition,
+        map: $scope.map,
+        title: 'test'
+      }));
+
       $ionicLoading.hide();
     }, function (error) {
       alert('Unable to get location: ' + error.message);
