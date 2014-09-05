@@ -28,8 +28,8 @@ module.exports = function(app, passport){
         // will not work properly
         yelp.search(
             {term: "coffee shop", 
-            location: "944 Market St San Francisco, CA 94102", 
-            cll: "37.783486, -122.408777", 
+            location: "1230-1298 Van Ness Avenue, San Francisco, CA 94109", 
+            cll: "38.78720399, -122.4216322", 
             radius_filter: "150"}, 
             function(err, data) {
                 if(err) {
