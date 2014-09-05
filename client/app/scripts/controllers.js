@@ -8,14 +8,26 @@ angular.module('Client.controllers', [])
     $scope.centerOnMe(true, 'splash');
   };
 
+
+  // creates proper icon for google maps marker
+  var image = {
+    url: '../images/coffee.png',
+    size: new google.maps.Size(20, 20),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(10, 10)
+  }
+
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
     businesses.forEach(function(business){
-      var markerPosition = new google.maps.LatLng(business.latitude, business.longitude);
+      console.log('placing marker for ', business);
+      console.log('image ', image);
+      var markerPosition = new google.maps.LatLng(business.location.coordinate.latitude, business.location.coordinate.longitude);
       var marker = new google.maps.Marker({
         position: markerPosition,
         map: $scope.map,
-        title: business.businessName
+        title: business.businessName,
+        icon: image
       });
     });
   };
@@ -36,9 +48,6 @@ angular.module('Client.controllers', [])
       console.log('Got pos', pos);
       var MyPosition = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
       $scope.map.setCenter(MyPosition);
-
-      $scope.placeMarkers([{businessName: "coffee", latitude: 37.7841, longitude:-122.410}]);
-
       $ionicLoading.hide();
     }, function (error) {
       alert('Unable to get location: ' + error.message);
