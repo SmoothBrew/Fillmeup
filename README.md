@@ -51,6 +51,15 @@ change directory to server
 npm install 
 ```
 
+###Run the app in your browser
+
+Fillmeup utilizes the ionic yoeoman generator which includes a fully build grunt file. To run the app in your browser, from your terminal:
+
+```grunt serve```
+
+This will initialize a server and open a browser window with the app.
+
+
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
