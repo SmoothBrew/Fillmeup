@@ -1,10 +1,27 @@
 // Yelp Api dependencies
 var authConfig = require('./auth/authConfig');
+// parseurl module
+var parseurl = require('parseurl');
+// node url module
+var url = require('url');
+// node query string module
+var querystring = require('querystring');
+
 
 // create a yelp client to use in it's requestHandler
 var yelp = require('./lib/yelp').createClient(authConfig.yelpAuth);
 
 module.exports = function(app, passport){
+     //======================================================================
+    // Allow Cross Origin - HACK
+    // =====================================================================
+
+    app.all('*', function(req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    });
+
     console.log('configuring requestHandler...');
     //======================================================================
     // Facebook Authentication
@@ -26,16 +43,21 @@ module.exports = function(app, passport){
         // however, yelp api also requires a location search term, the more specific the 
         // better, if the location term is too broad (i.e. a city name), then the radius_filter
         // will not work properly
+        var parsedUrl = url.parse(req.url);
+        console.log('querystring parsed is: ', querystring.parse(parsedUrl.query));
+        var parsedQuery = querystring.parse(parsedUrl.query);
+
         yelp.search(
             {term: "coffee shop", 
-            location: "944 Market St San Francisco, CA 94102", 
-            cll: "37.783486, -122.408777", 
-            radius_filter: "150"}, 
+            location: parsedQuery.address, 
+            cll: parsedQuery.lat + ',' + parsedQuery.lng, 
+            radius_filter: "500"}, 
             function(err, data) {
                 if(err) {
                     console.log(err);
                 }
                 // format data to just include business name, it's location and yelp rating
+                console.log('yelp data is: ', data);
                 var yelpData = [];
                 data['businesses'].forEach(function(value, index, array) {
                     var obj = {};
@@ -44,7 +66,7 @@ module.exports = function(app, passport){
                     obj.rating = value.rating;
                     yelpData.push(obj);
                 });
-                console.log('data is: ', data);
+                console.log('formatted yelp data is: ', yelpData);
                 res.end(JSON.stringify(yelpData));
             });
 
