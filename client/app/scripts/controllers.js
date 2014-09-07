@@ -4,12 +4,14 @@ angular.module('Client.controllers', [])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $http) {
 
-  $scope.name = "test";
+  var assignName = function(nameStr) {
+    $scope.topRated.name = nameStr;
+  }
 
   $scope.topRated = {
       marker: null,
       rating: 0,
-      name: null
+      name: 'test'
     };
   // create a google maps geocoder object
   var geocoder = new google.maps.Geocoder();
@@ -29,6 +31,7 @@ angular.module('Client.controllers', [])
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
+    var topBusinessName = '';
     var counter = 0;
     // store top rated marker here
     // business is Yelp data which includes address to reverse geocode
@@ -59,15 +62,15 @@ angular.module('Client.controllers', [])
           if(business.rating > $scope.topRated.rating) {
             $scope.topRated.marker = marker;
             $scope.topRated.rating = business.rating;
-            console.log('business.businessName is: ', business.businessName);
-            $scope.topRated.name = business.businessName;
-            console.log('$scope.topRated.name is: ', $scope.topRated.name);
-            $scope.name = business.businessName;
+            topBusinessName = business.businessName;
+
           }
           // if at last business in businesses array, add animation to marker w/ highest rating
           //add animation        
           if(counter === businesses.length) {
             $scope.topRated.marker.setAnimation(google.maps.Animation.BOUNCE);
+            assignName(topBusinessName);
+            console.log('scope.topRated.name is: ', $scope.topRated.name);
           }
         }
       });  // end of forEach
@@ -107,7 +110,9 @@ angular.module('Client.controllers', [])
 
           $http({ method: 'GET', url: url})
             .success(function(data, status, headers, config) {
-                $scope.placeMarkers(data);
+                console.log('console.log from success: ',$scope.placeMarkers(data));
+
+
             })
             .error(function(data, status, headers, config) {
               console.log('error with GET request to /cafe');
