@@ -51,7 +51,7 @@ module.exports = function(app, passport){
             {term: "coffee shop", 
             location: parsedQuery.address, 
             cll: parsedQuery.lat + ',' + parsedQuery.lng, 
-            radius_filter: "250"}, 
+            radius_filter: "150"}, 
             function(err, data) {
                 if(err) {
                     console.log(err);
