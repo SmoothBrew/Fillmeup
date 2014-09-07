@@ -4,7 +4,13 @@ angular.module('Client.controllers', [])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $http) {
 
+  $scope.name = "test";
 
+  $scope.topRated = {
+      marker: null,
+      rating: 0,
+      name: null
+    };
   // create a google maps geocoder object
   var geocoder = new google.maps.Geocoder();
 
@@ -23,6 +29,8 @@ angular.module('Client.controllers', [])
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
+    var counter = 0;
+    // store top rated marker here
     // business is Yelp data which includes address to reverse geocode
     businesses.forEach(function(business){
       console.log('business is: ', business);
@@ -30,18 +38,41 @@ angular.module('Client.controllers', [])
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
       // geocode address
       geocoder.geocode({'address': address}, function(results, status) {
-
+        counter++;
         if(status === google.maps.GeocoderStatus.OK) { 
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
           var marker = new google.maps.Marker({
             position: markerPosition,
             map: $scope.map,
             title: business.businessName,
-            icon: image
+            icon: image,
           });
+          // create infowindow
+          var infowindow = new google.maps.InfoWindow({
+            content: business.businessName
+          });
+          // add click event listener to marker
+          google.maps.event.addListener(marker, 'mouseover', function() {
+            infowindow.open($scope.map, marker);
+          });
+          // check rating against toprated marker, and if higher
+          if(business.rating > $scope.topRated.rating) {
+            $scope.topRated.marker = marker;
+            $scope.topRated.rating = business.rating;
+            console.log('business.businessName is: ', business.businessName);
+            $scope.topRated.name = business.businessName;
+            console.log('$scope.topRated.name is: ', $scope.topRated.name);
+            $scope.name = business.businessName;
+          }
+          // if at last business in businesses array, add animation to marker w/ highest rating
+          //add animation        
+          if(counter === businesses.length) {
+            $scope.topRated.marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
         }
-      });
+      });  // end of forEach
     });
+
   };
 
   $scope.centerOnMe = function (showOrHideBackdrop, templateName) {

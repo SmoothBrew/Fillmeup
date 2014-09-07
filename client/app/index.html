@@ -19,13 +19,26 @@
   </head>
 
   <body ng-app="Client" ng-controller="MapCtrl">
+  <h1>{{ name }}</h1>
+
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Map</h1>
+      <h1 class="title">Java Hunt</h1>
     </ion-header-bar>
 
     <ion-content scroll="false">
-      <map on-create="mapCreated(map)"></map>
+
+      <map on-create="mapCreated(map)"></map>    
+
+        <!-- Card to display recommended coffee shop -->
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                {{ topRated.name }}
+            </div>
+        </div> 
+      
     </ion-content>
+
 
     <ion-footer-bar class="bar-stable">
       <a ng-click="centerOnMe(false, 'loading')" class="button button-icon icon ion-navigate"></a>
