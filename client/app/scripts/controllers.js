@@ -50,7 +50,6 @@ angular.module('Client.controllers', [])
           }, function(response, status){
 
             if(status === google.maps.GeocoderStatus.OK) { 
-              // console.log('in callback hell, here is results ', response);
               business.distance = response.rows[0].elements[0].distance.text;
 
               // add info box w/ distance, rating and business name
@@ -66,7 +65,7 @@ angular.module('Client.controllers', [])
 
               if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
                 $scope.highestRated = business;
-                console.log('highest rated = ', $scope.highestRated);
+                $scope.$digest();
               }
 
               var marker = new google.maps.Marker({
