@@ -13,13 +13,7 @@ angular.module('Client.controllers', [])
     $scope.centerOnMe(true, 'splash');
   };
 
-  // creates proper icon for google maps marker
-  var image = {
-    url: '../images/coffee.png',
-    size: new google.maps.Size(20, 20),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(10, 10)
-  };
+  
 
   var shape = {
     coords: [3, 2, 20, 2, 20, 14, 3, 14],
@@ -68,6 +62,25 @@ angular.module('Client.controllers', [])
                 $scope.highestRated = business;
                 console.log('highest rated = ', $scope.highestRated);
               }
+
+              console.log("Current Business:" +business.rating);
+              var imgUrl = '../images/coffee_bad.png';
+              if(business.rating >= 4){
+                var imgUrl = '../images/coffee_great.png';
+              } else if(business.rating >= 3.5){
+                var imgUrl = '../images/coffee_good.png';
+              } else if(business.rating > 2.5){
+                var imgUrl = '../images/coffee_ok.png';
+              } else{
+                var imgUrl = '../images/coffee_bad.png';
+              }
+              // creates proper icon for google maps marker
+              var image = {
+                url: imgUrl,
+                size: new google.maps.Size(20, 20),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 10)
+              };
 
               var marker = new google.maps.Marker({
                 position: markerPosition,
