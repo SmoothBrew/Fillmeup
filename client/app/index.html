@@ -19,16 +19,36 @@
   </head>
 
   <body ng-app="Client" ng-controller="MapCtrl">
+
+
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Map</h1>
+      <h1 class="title">Java Hunt</h1>
     </ion-header-bar>
 
+<<<<<<< HEAD
+    <ion-content scroll="false">
+
+      <map on-create="mapCreated(map)"></map>    
+
+        <!-- Card to display recommended coffee shop -->
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                {{ topRated.name }}
+            </div>
+        </div> 
+      
+=======
     <ion-content scroll="false" data-tap-disabled="true">
       <map on-create="mapCreated(map)"></map>
+>>>>>>> 022956381d1a50f099ab04e895ce6ee3b6c02267
     </ion-content>
+
 
     <ion-footer-bar class="bar-stable">
       <a ng-click="centerOnMe(false, 'loading')" class="button button-icon icon ion-navigate"></a>
+    <span>{{topRated.name}}</span>
+      
     </ion-footer-bar>
 
     <!-- build:js scripts/vendor.js -->

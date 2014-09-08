@@ -4,7 +4,14 @@ angular.module('Client.controllers', [])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $http) {
 
+  var assignName = function(nameStr) {
+    $scope.topRated.name = nameStr;
+  }
 
+  $scope.topRated = {
+      marker: null,
+      rating: 0
+    };
   // create a google maps geocoder object
   var geocoder = new google.maps.Geocoder();
 
@@ -31,6 +38,9 @@ angular.module('Client.controllers', [])
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
+    var topBusinessName = '';
+    var counter = 0;
+    // store top rated marker here
     // business is Yelp data which includes address to reverse geocode
     businesses.forEach(function(business){
       console.log('business is: ', business);
@@ -38,8 +48,12 @@ angular.module('Client.controllers', [])
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
       // geocode address
       geocoder.geocode({'address': address}, function(results, status) {
+<<<<<<< HEAD
+        counter++;
+=======
 
         
+>>>>>>> 022956381d1a50f099ab04e895ce6ee3b6c02267
         if(status === google.maps.GeocoderStatus.OK) { 
           // add info box w/ distance, rating and business name
           var contentString = '<div class="infoWindow">'+
@@ -63,6 +77,38 @@ angular.module('Client.controllers', [])
             map: $scope.map,
             title: business.businessName,
             icon: image,
+<<<<<<< HEAD
+          });
+
+          var infoContent = '<h3>' + business.businessName + '</h3>' + business.rating;
+          // create infowindow
+          var infowindow = new google.maps.InfoWindow({
+            content: infoContent
+          });
+          // add click event listener to marker
+          google.maps.event.addListener(marker, 'mouseover', function() {
+            infowindow.open($scope.map, marker);
+          });
+          // check rating against toprated marker, and if higher
+          if(business.rating > $scope.topRated.rating) {
+            $scope.topRated.marker = marker;
+            $scope.topRated.rating = business.rating;
+            topBusinessName = business.businessName;
+
+          }
+          // if at last business in businesses array, add animation to marker w/ highest rating
+          //add animation        
+          if(counter === businesses.length) {
+            $scope.topRated.marker.setAnimation(google.maps.Animation.BOUNCE);
+            // assignName(topBusinessName);
+            $scope.topRated.name = topBusinessName;
+            console.log('scope.topRated.name is: ', $scope.topRated.name);
+            console.log('topBusinessName is: ', topBusinessName);
+
+          }
+        }
+      });  // end of forEach
+=======
             shape: shape
           });
 
@@ -83,7 +129,9 @@ angular.module('Client.controllers', [])
         }
 
       });
+>>>>>>> 022956381d1a50f099ab04e895ce6ee3b6c02267
     });
+
   };
 
   $scope.centerOnMe = function (showOrHideBackdrop, templateName) {
@@ -118,7 +166,9 @@ angular.module('Client.controllers', [])
 
           $http({ method: 'GET', url: url})
             .success(function(data, status, headers, config) {
-                $scope.placeMarkers(data);
+                console.log('console.log from success: ', $scope.placeMarkers(data));
+
+
             })
             .error(function(data, status, headers, config) {
               console.log('error with GET request to /cafe');
