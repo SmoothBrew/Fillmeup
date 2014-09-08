@@ -64,6 +64,7 @@ module.exports = function(app, passport){
                     obj.businessName = value.name;
                     obj.location = value.location;
                     obj.rating = value.rating;
+                    obj.reviewCount = value.review_count;
                     yelpData.push(obj);
                 });
                 console.log('formatted yelp data is: ', yelpData);

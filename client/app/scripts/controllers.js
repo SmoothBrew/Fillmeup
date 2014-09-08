@@ -60,9 +60,13 @@ angular.module('Client.controllers', [])
               if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
                 $scope.highestRated = business;
                 $scope.$digest();
+              }else if($scope.highestRated.rating === business.rating){
+                if($scope.highestRated.reviewCount <= business.reviewCount){
+                  $scope.highestRated = business;
+                  $scope.$digest();
+                }
               }
 
-              console.log("Current Business:" +business.rating);
               var imgUrl = '../images/coffee_bad.png';
               if(business.rating >= 4){
                 var imgUrl = '../images/coffee_great.png';
