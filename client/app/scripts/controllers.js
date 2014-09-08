@@ -13,13 +13,7 @@ angular.module('Client.controllers', [])
     $scope.centerOnMe(true, 'splash');
   };
 
-  // creates proper icon for google maps marker
-  var image = {
-    url: '../images/coffee.png',
-    size: new google.maps.Size(20, 20),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(10, 10)
-  };
+  
 
   var shape = {
     coords: [3, 2, 20, 2, 20, 14, 3, 14],
@@ -50,12 +44,11 @@ angular.module('Client.controllers', [])
           }, function(response, status){
 
             if(status === google.maps.GeocoderStatus.OK) { 
-              // console.log('in callback hell, here is results ', response);
               business.distance = response.rows[0].elements[0].distance.text;
 
               // add info box w/ distance, rating and business name
               var contentString = '<div class="infoWindow">'+
-              '<h3>' + business.businessName + '</h3>' +
+              '<h4>' + business.businessName + '</h4>' +
               '<div class="rating">' + 'Rating: ' + business.rating + '/5' + '</div>' +
               '<div class="distance">' + 'Distance: ' + business.distance + '</div>' +
               '</div>';
@@ -66,8 +59,27 @@ angular.module('Client.controllers', [])
 
               if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
                 $scope.highestRated = business;
-                console.log('highest rated = ', $scope.highestRated);
+                $scope.$digest();
               }
+
+              console.log("Current Business:" +business.rating);
+              var imgUrl = '../images/coffee_bad.png';
+              if(business.rating >= 4){
+                var imgUrl = '../images/coffee_great.png';
+              } else if(business.rating >= 3.5){
+                var imgUrl = '../images/coffee_good.png';
+              } else if(business.rating > 2.5){
+                var imgUrl = '../images/coffee_ok.png';
+              } else{
+                var imgUrl = '../images/coffee_bad.png';
+              }
+              // creates proper icon for google maps marker
+              var image = {
+                url: imgUrl,
+                size: new google.maps.Size(20, 20),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 10)
+              };
 
               var marker = new google.maps.Marker({
                 position: markerPosition,
@@ -117,6 +129,16 @@ angular.module('Client.controllers', [])
 
       var lat = pos.coords.latitude;
       var lng = pos.coords.longitude;
+
+        // add user location pin drop
+      var userPosition = new google.maps.LatLng(lat, lng);
+
+      var userMarker = new google.maps.Marker({
+        position: userPosition,
+        map: $scope.map,
+        title: 'user',
+      });
+
 
       $scope.myPosition = new google.maps.LatLng(lat, lng);
       $scope.map.setCenter($scope.myPosition);
