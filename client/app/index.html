@@ -19,8 +19,8 @@
   </head>
 
   <body ng-app="Client" ng-controller="MapCtrl">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Map</h1>
+    <ion-header-bar class="bar-dark">
+      <h1 class="title">Java Hunt</h1>
     </ion-header-bar>
 
     <ion-content scroll="false" data-tap-disabled="true">
@@ -29,7 +29,7 @@
 
       <div class="list">
         <div class="item item-thumbnail-left">
-          <img src="images/coffee.png">
+          <img src="images/coffee_recommend_large.png">
           <h2>Java Hunt Recommends</h2>
           <p>{{ highestRated.businessName }}</p>
           <p>Distance: {{ highestRated.distance }} </p>
@@ -38,9 +38,9 @@
 
     </ion-content>
 
-    <ion-footer-bar class="bar-stable">
+    <!-- <ion-footer-bar class="bar-stable">
       <a ng-click="centerOnMe(false, 'loading')" class="button button-icon icon ion-navigate"></a>
-    </ion-footer-bar>
+    </ion-footer-bar> -->
 
     <!-- build:js scripts/vendor.js -->
     <!-- This Google Maps API file was downloaded from: -->
