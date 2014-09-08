@@ -24,7 +24,35 @@
     </ion-header-bar>
 
     <ion-content scroll="false" data-tap-disabled="true">
+    
       <map on-create="mapCreated(map)"></map>
+
+  <!--   <div class="card">
+        <div class="item item-text-wrap">
+            This is a basic Card which contains an item that has wrapping text.
+        </div>
+    </div> -->
+
+    <div class="list">
+
+  <div class="item item-thumbnail-left">
+
+     <img src="images/coffee.png">
+
+    <!-- <a class="item item-thumbnail-left" href="#">
+      <img src="cover.jpg"> -->
+      <h2>Java Hunt Recommends</h2>
+      <p>{{ highestRated.businessName}}</p>
+      <p>Distance: {{ highestRated.distance }} </p>
+    <!-- </a> -->
+   <!--  <button class="button button-positive">
+      <i class="icon ion-ios7-telephone"></i>
+    </button> -->
+  </div>
+
+
+</div>
+
     </ion-content>
 
     <ion-footer-bar class="bar-stable">
