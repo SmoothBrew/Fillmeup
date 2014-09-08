@@ -10,8 +10,7 @@ angular.module('Client.controllers', [])
 
   $scope.topRated = {
       marker: null,
-      rating: 0,
-      name: 'test'
+      rating: 0
     };
   // create a google maps geocoder object
   var geocoder = new google.maps.Geocoder();
@@ -50,9 +49,11 @@ angular.module('Client.controllers', [])
             title: business.businessName,
             icon: image,
           });
+
+          var infoContent = '<h3>' + business.businessName + '</h3>' + business.rating;
           // create infowindow
           var infowindow = new google.maps.InfoWindow({
-            content: business.businessName
+            content: infoContent
           });
           // add click event listener to marker
           google.maps.event.addListener(marker, 'mouseover', function() {
@@ -69,8 +70,11 @@ angular.module('Client.controllers', [])
           //add animation        
           if(counter === businesses.length) {
             $scope.topRated.marker.setAnimation(google.maps.Animation.BOUNCE);
-            assignName(topBusinessName);
+            // assignName(topBusinessName);
+            $scope.topRated.name = topBusinessName;
             console.log('scope.topRated.name is: ', $scope.topRated.name);
+            console.log('topBusinessName is: ', topBusinessName);
+
           }
         }
       });  // end of forEach
@@ -110,7 +114,7 @@ angular.module('Client.controllers', [])
 
           $http({ method: 'GET', url: url})
             .success(function(data, status, headers, config) {
-                console.log('console.log from success: ',$scope.placeMarkers(data));
+                console.log('console.log from success: ', $scope.placeMarkers(data));
 
 
             })

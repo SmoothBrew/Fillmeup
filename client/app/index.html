@@ -20,6 +20,7 @@
 
   <body ng-app="Client" ng-controller="MapCtrl">
 
+
     <ion-header-bar class="bar-stable">
       <h1 class="title">Java Hunt</h1>
     </ion-header-bar>
@@ -41,6 +42,8 @@
 
     <ion-footer-bar class="bar-stable">
       <a ng-click="centerOnMe(false, 'loading')" class="button button-icon icon ion-navigate"></a>
+    <span>{{topRated.name}}</span>
+      
     </ion-footer-bar>
 
     <!-- build:js scripts/vendor.js -->
