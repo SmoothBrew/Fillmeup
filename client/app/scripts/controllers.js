@@ -26,6 +26,9 @@ angular.module('Client.controllers', [])
     type: 'poly'
   };
 
+  $scope.openInfoWindow = null;
+  $scope.highestRated = {};
+
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
     // business is Yelp data which includes address to reverse geocode
@@ -39,15 +42,19 @@ angular.module('Client.controllers', [])
         
         if(status === google.maps.GeocoderStatus.OK) { 
           // add info box w/ distance, rating and business name
-          var contentString = '<div class="recommendationBubble">'+
-          '<h2>' + business.businessName + '</h2>' +
+          var contentString = '<div class="infoWindow">'+
+          '<h3>' + business.businessName + '</h3>' +
           '<div class="rating">' + 'Rating: ' + business.rating + '/5' + '</div>' +
           '<div class="distance">' + 'Distance: ' + 'fake distance here' + '</div>' +
           '</div>';
 
-          var recommendationBubble = new google.maps.InfoWindow({
+          var infoWindow = new google.maps.InfoWindow({
             content: contentString
           });
+
+          if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
+            $scope.highestRated = business;
+          }
 
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
 
@@ -61,8 +68,19 @@ angular.module('Client.controllers', [])
 
           // add event listener for marker
           google.maps.event.addListener(marker, 'click', function(){
-            recommendationBubble.open($scope.map, marker);
+            if($scope.openInfoWindow){
+              $scope.openInfoWindow.close();
+            }
+            $scope.openInfoWindow = infoWindow;
+            infoWindow.open($scope.map, marker);
           });
+
+          if(business === $scope.highestRated){
+            if($scope.openInfoWindow){
+              $scope.openInfoWindow.close();
+            }
+            google.maps.event.trigger(marker, 'click');
+          }
         }
 
       });
