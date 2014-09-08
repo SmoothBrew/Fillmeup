@@ -53,6 +53,10 @@ npm install
 
 ###Run the app in your browser
 
+We have added support for a mongo database, which will be useful in the future.
+Start mongo with: `mongod` (specify a path if necessary)
+*if you don't have mongo installed, comment out line 14 in server.js*
+Run the server using `nodemon ./server/server.js`
 Fillmeup utilizes the ionic yoeoman generator which includes a fully build grunt file. To run the app in your browser, from your terminal:
 
 ```grunt serve```
