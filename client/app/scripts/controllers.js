@@ -25,6 +25,7 @@ angular.module('Client.controllers', [])
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
+    var counter = 0;
     // business is Yelp data which includes address to reverse geocode
     businesses.forEach(function(business){
       console.log('business is: ', business);
@@ -32,6 +33,8 @@ angular.module('Client.controllers', [])
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
       // geocode address
       geocoder.geocode({'address': address}, function(results, status) {
+        counter++;
+
         if(status === google.maps.GeocoderStatus.OK) { 
            
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
@@ -57,10 +60,6 @@ angular.module('Client.controllers', [])
                 content: contentString
               });
 
-              if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
-                $scope.highestRated = business;
-                $scope.$digest();
-              }
 
               console.log("Current Business:" +business.rating);
               var imgUrl = '../images/coffee_bad.png';
@@ -89,6 +88,11 @@ angular.module('Client.controllers', [])
                 shape: shape
               });
 
+              if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
+                $scope.highestRated = business;
+                $scope.highestRated.marker = marker;
+                $scope.$digest();
+              }
               // add event listener for marker
               google.maps.event.addListener(marker, 'click', function(){
                 if($scope.openInfoWindow){
@@ -101,15 +105,21 @@ angular.module('Client.controllers', [])
               if(business === $scope.highestRated){
                 google.maps.event.trigger(marker, 'click');
               }
+        if(counter === businesses.length) {
+          $scope.highestRated.marker.setMap(null);
+          $scope.highestRated.marker.icon.url = "../images/coffee.png";
+          console.log('$scope.highestRated', $scope.highestRated.marker);
+          $scope.highestRated.marker.setMap($scope.map);
+        }
 
             }
 
           });
 
         }
-
+       
       });
-    });
+    }); // End of forEach
   };
 
   $scope.centerOnMe = function (showOrHideBackdrop, templateName) {
