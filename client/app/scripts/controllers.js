@@ -69,16 +69,15 @@ angular.module('Client.controllers', [])
           // add event listener for marker
           google.maps.event.addListener(marker, 'click', function(){
             if($scope.openInfoWindow){
+              console.log('closing', $scope.openInfoWindow);
               $scope.openInfoWindow.close();
             }
             $scope.openInfoWindow = infoWindow;
-            infoWindow.open($scope.map, marker);
+            console.log('opening ', $scope.openInfoWindow)
+            $scope.openInfoWindow.open($scope.map, marker);
           });
 
           if(business === $scope.highestRated){
-            if($scope.openInfoWindow){
-              $scope.openInfoWindow.close();
-            }
             google.maps.event.trigger(marker, 'click');
           }
         }
