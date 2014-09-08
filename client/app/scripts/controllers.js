@@ -27,7 +27,9 @@ angular.module('Client.controllers', [])
   };
 
   $scope.openInfoWindow = null;
-  $scope.highestRated = {};
+  $scope.highestRated = {
+    distance: 0.2
+  };
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
@@ -54,6 +56,7 @@ angular.module('Client.controllers', [])
 
           if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
             $scope.highestRated = business;
+            $scope.highestRated.distance = 0.2;
           }
 
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
