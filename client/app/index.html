@@ -23,7 +23,7 @@
       <h1 class="title">Map</h1>
     </ion-header-bar>
 
-    <ion-content scroll="false">
+    <ion-content scroll="false" data-tap-disabled="true">
       <map on-create="mapCreated(map)"></map>
     </ion-content>
 
@@ -36,7 +36,14 @@
     <!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true -->
     <!-- Saving it in the vendor/ directory allows it to be bundled as part of the build system. -->
     <!-- You should replace it with a version downloaded using your API key -->
-    <script src="vendor/google/maps.js"></script>
+    <!-- 
+    <script src="vendor/google/maps.js"></script>  -->
+
+    <!-- Added personal API key, should replace with own key -->
+    <script type="text/javascript"
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkWHf2G4vDLAHqA7uWUY3GoVhUnSLyP4U">
+    </script>
+
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
