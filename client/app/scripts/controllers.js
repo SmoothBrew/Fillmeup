@@ -16,7 +16,7 @@ angular.module('Client.controllers', [])
   
 
   var shape = {
-    coords: [3, 2, 20, 2, 20, 14, 3, 14],
+    coords: [3, 2, 25, 2, 25, 14, 3, 14],
     type: 'poly'
   };
 
@@ -76,7 +76,7 @@ angular.module('Client.controllers', [])
               // creates proper icon for google maps marker
               var image = {
                 url: imgUrl,
-                size: new google.maps.Size(20, 20),
+                size: new google.maps.Size(25, 25),
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(10, 10)
               };
