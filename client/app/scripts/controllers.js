@@ -25,8 +25,10 @@ angular.module('Client.controllers', [])
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
+    var counter = 0;
     // business is Yelp data which includes address to reverse geocode
     businesses.forEach(function(business){
+      counter++;
       console.log('business is: ', business);
       // get address to geocode
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
@@ -57,10 +59,6 @@ angular.module('Client.controllers', [])
                 content: contentString
               });
 
-              if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
-                $scope.highestRated = business;
-                $scope.$digest();
-              }
 
               console.log("Current Business:" +business.rating);
               var imgUrl = '../images/coffee_bad.png';
@@ -89,6 +87,11 @@ angular.module('Client.controllers', [])
                 shape: shape
               });
 
+              if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
+                $scope.highestRated = business;
+                $scope.highestRated.marker = marker;
+                $scope.$digest();
+              }
               // add event listener for marker
               google.maps.event.addListener(marker, 'click', function(){
                 if($scope.openInfoWindow){
@@ -107,9 +110,8 @@ angular.module('Client.controllers', [])
           });
 
         }
-
       });
-    });
+    }); // End of forEach
   };
 
   $scope.centerOnMe = function (showOrHideBackdrop, templateName) {
