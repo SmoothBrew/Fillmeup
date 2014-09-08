@@ -24,7 +24,18 @@
     </ion-header-bar>
 
     <ion-content scroll="false" data-tap-disabled="true">
+    
       <map on-create="mapCreated(map)"></map>
+
+      <div class="list">
+        <div class="item item-thumbnail-left">
+          <img src="images/coffee.png">
+          <h2>Java Hunt Recommends</h2>
+          <p>{{ highestRated.businessName }}</p>
+          <p>Distance: {{ highestRated.distance }} </p>
+        </div>
+      </div>
+
     </ion-content>
 
     <ion-footer-bar class="bar-stable">
