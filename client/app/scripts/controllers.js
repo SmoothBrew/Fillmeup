@@ -27,9 +27,7 @@ angular.module('Client.controllers', [])
   };
 
   $scope.openInfoWindow = null;
-  $scope.highestRated = {
-    distance: 0.2
-  };
+  $scope.highestRated = {};
 
   // helper function to place markers (move into utility file/service eventually?)
   $scope.placeMarkers = function(businesses){
@@ -40,49 +38,62 @@ angular.module('Client.controllers', [])
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
       // geocode address
       geocoder.geocode({'address': address}, function(results, status) {
-
-        
         if(status === google.maps.GeocoderStatus.OK) { 
-          // add info box w/ distance, rating and business name
-          var contentString = '<div class="infoWindow">'+
-          '<h3>' + business.businessName + '</h3>' +
-          '<div class="rating">' + 'Rating: ' + business.rating + '/5' + '</div>' +
-          '<div class="distance">' + 'Distance: ' + 'fake distance here' + '</div>' +
-          '</div>';
-
-          var infoWindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-
-          if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
-            $scope.highestRated = business;
-            $scope.highestRated.distance = 0.2;
-          }
-
+           
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
+          var calculateDistance = new google.maps.DistanceMatrixService();
+          calculateDistance.getDistanceMatrix({
+            origins: [$scope.myPosition],
+            destinations: [markerPosition],
+            travelMode: google.maps.TravelMode.WALKING,
+            unitSystem: google.maps.UnitSystem.IMPERIAL
+          }, function(response, status){
 
-          var marker = new google.maps.Marker({
-            position: markerPosition,
-            map: $scope.map,
-            title: business.businessName,
-            icon: image,
-            shape: shape
-          });
+            if(status === google.maps.GeocoderStatus.OK) { 
+              // console.log('in callback hell, here is results ', response);
+              business.distance = response.rows[0].elements[0].distance.text;
 
-          // add event listener for marker
-          google.maps.event.addListener(marker, 'click', function(){
-            if($scope.openInfoWindow){
-              console.log('closing', $scope.openInfoWindow);
-              $scope.openInfoWindow.close();
+              // add info box w/ distance, rating and business name
+              var contentString = '<div class="infoWindow">'+
+              '<h3>' + business.businessName + '</h3>' +
+              '<div class="rating">' + 'Rating: ' + business.rating + '/5' + '</div>' +
+              '<div class="distance">' + 'Distance: ' + business.distance + '</div>' +
+              '</div>';
+
+              var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+
+              if(!$scope.highestRated.rating || $scope.highestRated.rating < business.rating){
+                $scope.highestRated = business;
+                console.log('highest rated = ', $scope.highestRated);
+              }
+
+              var marker = new google.maps.Marker({
+                position: markerPosition,
+                map: $scope.map,
+                title: business.businessName,
+                icon: image,
+                shape: shape
+              });
+
+              // add event listener for marker
+              google.maps.event.addListener(marker, 'click', function(){
+                if($scope.openInfoWindow){
+                  $scope.openInfoWindow.close();
+                }
+                $scope.openInfoWindow = infoWindow;
+                $scope.openInfoWindow.open($scope.map, marker);
+              });
+
+              if(business === $scope.highestRated){
+                google.maps.event.trigger(marker, 'click');
+              }
+
             }
-            $scope.openInfoWindow = infoWindow;
-            console.log('opening ', $scope.openInfoWindow)
-            $scope.openInfoWindow.open($scope.map, marker);
+
           });
 
-          if(business === $scope.highestRated){
-            google.maps.event.trigger(marker, 'click');
-          }
         }
 
       });
@@ -107,11 +118,11 @@ angular.module('Client.controllers', [])
       var lat = pos.coords.latitude;
       var lng = pos.coords.longitude;
 
-      var myPosition = new google.maps.LatLng(lat, lng);
-      $scope.map.setCenter(myPosition);
+      $scope.myPosition = new google.maps.LatLng(lat, lng);
+      $scope.map.setCenter($scope.myPosition);
       $ionicLoading.hide();
 
-      geocoder.geocode({ 'latLng': myPosition}, function(results, status) {
+      geocoder.geocode({'latLng': $scope.myPosition}, function(results, status) {
         
         if(status === google.maps.GeocoderStatus.OK) {
           console.log('geocoding OK');
