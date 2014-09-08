@@ -28,12 +28,13 @@ angular.module('Client.controllers', [])
     var counter = 0;
     // business is Yelp data which includes address to reverse geocode
     businesses.forEach(function(business){
-      counter++;
       console.log('business is: ', business);
       // get address to geocode
       var address = business.location.address[0] + ', ' + business.location.city + ', ' + business.location.state_code;
       // geocode address
       geocoder.geocode({'address': address}, function(results, status) {
+        counter++;
+
         if(status === google.maps.GeocoderStatus.OK) { 
            
           var markerPosition = new google.maps.LatLng(results[0].geometry.location.k, results[0].geometry.location.B);
@@ -104,12 +105,19 @@ angular.module('Client.controllers', [])
               if(business === $scope.highestRated){
                 google.maps.event.trigger(marker, 'click');
               }
+        if(counter === businesses.length) {
+          $scope.highestRated.marker.setMap(null);
+          $scope.highestRated.marker.icon.url = "../images/coffee.png";
+          console.log('$scope.highestRated', $scope.highestRated.marker);
+          $scope.highestRated.marker.setMap($scope.map);
+        }
 
             }
 
           });
 
         }
+       
       });
     }); // End of forEach
   };
