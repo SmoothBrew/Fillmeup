@@ -55,7 +55,7 @@ angular.module('Client.controllers', [])
 
               // add info box w/ distance, rating and business name
               var contentString = '<div class="infoWindow">'+
-              '<h3>' + business.businessName + '</h3>' +
+              '<h4>' + business.businessName + '</h4>' +
               '<div class="rating">' + 'Rating: ' + business.rating + '/5' + '</div>' +
               '<div class="distance">' + 'Distance: ' + business.distance + '</div>' +
               '</div>';
@@ -117,6 +117,16 @@ angular.module('Client.controllers', [])
 
       var lat = pos.coords.latitude;
       var lng = pos.coords.longitude;
+
+        // add user location pin drop
+      var userPosition = new google.maps.LatLng(lat, lng);
+
+      var userMarker = new google.maps.Marker({
+        position: userPosition,
+        map: $scope.map,
+        title: 'user',
+      });
+
 
       $scope.myPosition = new google.maps.LatLng(lat, lng);
       $scope.map.setCenter($scope.myPosition);
